@@ -37,7 +37,7 @@ To help beginner developers understand common coding issues and improve code qua
 
 This version uses rule-based code analysis. It does not yet connect to a real AI model.
 link
-https://priyankapradhan2406.github.io/CodeGuard-AI/⁠
+
 
 👩‍💻 Developer
 
