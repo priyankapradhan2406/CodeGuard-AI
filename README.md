@@ -45,4 +45,3 @@ Project: CodeGuard AI
 Version: 1.0
 ## 📸 Project Preview
 
-![CodeGuard AI Preview](codeguard-preview.png)
