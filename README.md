@@ -21,8 +21,9 @@ CodeGuard AI is a web-based code review tool designed to identify common coding 
 - CSS3
 - JavaScript
 
-link
-CodeGuard AI – README.md⁠
+live demo
+
+https://priyankapradhan2406.github.io/CodeGuard-AI/⁠
 
 🎯 Project Objective
 
