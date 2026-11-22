@@ -2,54 +2,54 @@
 
 Smart Code Review & Bug Detection Platform
 
-CodeGuard AI is a web-based code review tool designed to identify common coding mistakes and highlight potential security risks.
+<p align="center">
+  A web-based tool designed to help developers identify potential coding issues through automated code analysis.
+</p>🚀 Live Demo
 
-🚀 Features
+"Click Here to Open CodeGuard AI" (https://priyankapradhan2406.github.io/CodeGuard-AI/)
 
-- Code analysis
-- Multiple programming language options
-- Detection of possible hardcoded passwords and API keys
-- Identification of risky "eval()" usage
-- Code quality suggestions
-- Code quality score
-- Review results dashboard
-- Simple and responsive interface
+📌 About the Project
 
-💻 Technologies Used
+CodeGuard AI is a beginner-friendly code analysis project designed to help developers review their code and identify potential issues.
+
+The project provides a simple interface where users can enter code and receive analysis based on predefined checking rules.
+
+✨ Features
+
+- Code input interface
+- Automated code analysis
+- Potential issue detection
+- Simple and user-friendly design
+- Instant analysis results
+
+🛠️ Technologies Used
 
 - HTML5
 - CSS3
 - JavaScript
 
-live demo
-
-https://priyankapradhan2406.github.io/CodeGuard-AI/⁠
-
 🎯 Project Objective
 
-To help beginner developers understand common coding issues and improve code quality through automated checks.
+The main objective of CodeGuard AI is to demonstrate how automated code analysis can help developers identify potential coding mistakes and improve code quality.
 
-⚙️ How to Use
+💻 How to Use
 
-1. Open CodeGuard AI.
-2. Select a programming language.
-3. Enter your code.
-4. Click Analyze Code.
-5. Review the detected issues and suggestions.
+1. Open the live demo.
+2. Enter your code in the input area.
+3. Run the analysis.
+4. Review the results displayed by the tool.
 
-📌 Project Note
+🔗 Project Links
 
-This version uses rule-based code analysis. It does not yet connect to a real AI model.
-link
-
+- Live Demo: https://priyankapradhan2406.github.io/CodeGuard-AI/
+- GitHub Repository: https://github.com/priyankapradhan2406/CodeGuard-AI
 
 👩‍💻 Developer
 
 Priyanka Pradhan
 
-Project: CodeGuard AI
-Version: 1.0
+B.Sc. Computer Science Student
 
-## 📸 Project Preview
+---
 
-![CodeGuard AI Preview](codeguard-preview.png)
+⭐ If you find this project interesting, feel free to explore the repository!
