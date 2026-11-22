@@ -4,151 +4,536 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CodeGuard AI | Code Review Assistant</title>
+<title>CodeGuard AI | Smart Code Reviewer</title>
+
 <style>
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#0b1020;color:#e8edff}
-header{padding:24px 7%;background:#111a30;border-bottom:1px solid #293653}
-header h1{margin:0;color:#70a5ff}
-header p{color:#aab7d0}
-main{max-width:1050px;margin:35px auto;padding:0 18px}
-.card{background:#131e35;border:1px solid #293653;border-radius:15px;padding:22px;margin-bottom:20px}
-h2{margin-top:0}
-label{display:block;margin:14px 0 8px;color:#c5d2ed}
-select,textarea{width:100%;padding:13px;background:#0b1428;color:white;border:1px solid #344666;border-radius:9px}
-textarea{min-height:250px;resize:vertical;font-family:monospace;font-size:14px}
-button{padding:12px 19px;border:0;border-radius:9px;background:#3478f6;color:white;font-weight:bold;margin:12px 8px 0 0;cursor:pointer}
-button.secondary{background:#34425d}
-button:hover{opacity:.85}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-.stat{background:#0b1428;padding:18px;border-radius:10px;text-align:center}
-.stat strong{display:block;font-size:27px;color:#70a5ff;margin-bottom:6px}
-.issue{padding:13px;margin:10px 0;background:#0b1428;border-left:4px solid #f0ae4c;border-radius:7px}
-.good{border-color:#35c98a}
-.error{border-color:#ff667d}
-.muted{color:#9eacc6}
-footer{text-align:center;padding:25px;color:#8291ad}
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #081121;
+  color: #e8efff;
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+}
+
+header {
+  background: #111d36;
+  padding: 22px 6%;
+  border-bottom: 1px solid #30405e;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+header h1 {
+  color: #75aaff;
+  font-size: 26px;
+}
+
+header p {
+  color: #aab9d5;
+  font-size: 13px;
+}
+
+main {
+  max-width: 1100px;
+  margin: 30px auto;
+  padding: 0 16px;
+}
+
+.card {
+  background: #14213b;
+  border: 1px solid #30405e;
+  border-radius: 18px;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+h2 {
+  margin-bottom: 14px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin: 15px 0 7px;
+}
+
+select, textarea {
+  width: 100%;
+  padding: 14px;
+  border-radius: 10px;
+  border: 1px solid #405477;
+  background: #091329;
+  color: white;
+  font-size: 15px;
+}
+
+textarea {
+  min-height: 240px;
+  resize: vertical;
+  font-family: monospace;
+}
+
+button {
+  border: none;
+  border-radius: 10px;
+  padding: 13px 18px;
+  margin: 12px 8px 0 0;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.primary {
+  background: #3478ed;
+  color: white;
+}
+
+.secondary {
+  background: #344765;
+  color: white;
+}
+
+.download {
+  background: #16865d;
+  color: white;
+}
+
+button:active {
+  opacity: 0.8;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.stat {
+  background: #091329;
+  border-radius: 14px;
+  padding: 20px;
+  text-align: center;
+}
+
+.stat strong {
+  display: block;
+  font-size: 30px;
+  color: #75aaff;
+}
+
+.stat span {
+  color: #c5d0e8;
+}
+
+.issue {
+  background: #091329;
+  border-left: 5px solid #f1ad48;
+  border-radius: 10px;
+  padding: 16px;
+  margin: 12px 0;
+}
+
+.issue.error {
+  border-color: #ff607b;
+}
+
+.issue.good {
+  border-color: #35c98b;
+}
+
+.issue h3 {
+  margin-bottom: 7px;
+}
+
+.issue p, .muted {
+  color: #aab9d5;
+}
+
+.report-info {
+  margin-top: 15px;
+  color: #aab9d5;
+  font-size: 13px;
+}
+
+footer {
+  text-align: center;
+  color: #91a1bd;
+  padding: 25px;
+  font-size: 13px;
+}
+
+@media(max-width:600px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .card {
+    padding: 17px;
+  }
+
+  header h1 {
+    font-size: 22px;
+  }
+}
 </style>
 </head>
+
 <body>
+
 <header>
-<h1>🛡️ CodeGuard AI</h1>
-<p>Smart Code Review & Security Assistant</p>
+  <div>
+    <h1>🛡️ CodeGuard AI</h1>
+    <p>Smart Code Review & Security Dashboard</p>
+  </div>
+  <span>Developer Project · Version 2.0</span>
 </header>
 
 <main>
-<div class="card">
-<h2>Analyze Your Code</h2>
-<p class="muted">Paste your source code below to check for common coding issues.</p>
 
-<label for="language">Programming Language</label>
-<select id="language">
-<option>JavaScript</option>
-<option>Python</option>
-<option>Java</option>
-<option>C++</option>
-</select>
+<section class="card">
+  <h2>Code Analysis Workspace</h2>
+  <p class="muted">
+    Paste your source code and select its programming language
+    to run a basic static code review.
+  </p>
 
-<label for="code">Enter Your Code</label>
-<textarea id="code" placeholder="Paste your code here..."></textarea>
+  <label for="language">Programming Language</label>
 
-<button onclick="analyze()">🔍 Analyze Code</button>
-<button class="secondary" onclick="clearCode()">Clear</button>
-</div>
+  <select id="language">
+    <option value="javascript">JavaScript</option>
+    <option value="python">Python</option>
+    <option value="java">Java</option>
+    <option value="cpp">C++</option>
+  </select>
 
-<div class="card">
-<h2>Analysis Dashboard</h2>
-<div class="stats">
-<div class="stat"><strong id="score">--</strong>Code Score</div>
-<div class="stat"><strong id="count">0</strong>Issues Found</div>
-<div class="stat"><strong id="reviews">0</strong>Reviews</div>
-</div>
-</div>
+  <label for="code">Your Source Code</label>
 
-<div class="card">
-<h2>Review Results</h2>
-<div id="results" class="muted">Your analysis results will appear here.</div>
-</div>
+  <textarea id="code"
+    placeholder="Paste your code here..."></textarea>
+
+  <button class="primary" onclick="analyzeCode()">
+    🔍 Analyze Code
+  </button>
+
+  <button class="secondary" onclick="clearCode()">
+    Clear
+  </button>
+
+  <button class="download" onclick="downloadReport()">
+    ⬇ Download Report
+  </button>
+
+  <div class="report-info" id="status">
+    Ready to analyze your code.
+  </div>
+</section>
+
+<section class="card">
+  <h2>📊 Analysis Dashboard</h2>
+
+  <div class="grid">
+    <div class="stat">
+      <strong id="score">--</strong>
+      <span>Code Score</span>
+    </div>
+
+    <div class="stat">
+      <strong id="count">0</strong>
+      <span>Issues Found</span>
+    </div>
+
+    <div class="stat">
+      <strong id="reviews">0</strong>
+      <span>Reviews</span>
+    </div>
+  </div>
+</section>
+
+<section class="card">
+  <h2>📝 Review Results</h2>
+
+  <div id="results" class="muted">
+    Your analysis results will appear here.
+  </div>
+</section>
+
+<section class="card">
+  <h2>About CodeGuard AI</h2>
+  <p class="muted">
+    CodeGuard AI is a student developer project that demonstrates
+    basic source-code analysis. It checks selected coding patterns
+    and provides suggestions to improve code quality and security.
+  </p>
+</section>
+
 </main>
 
-<footer>CodeGuard AI · Student Developer Project · Version 1.0</footer>
+<footer>
+  CodeGuard AI · Student Developer Project · Version 2.0
+</footer>
 
 <script>
-let reviews = 0;
 
-function analyze(){
-const code=document.getElementById("code").value;
-const lang=document.getElementById("language").value;
-const results=document.getElementById("results");
+let reviewCount = 0;
+let latestReport = "";
 
-if(!code.trim()){
-results.textContent="Please enter some code first.";
-return;
+function analyzeCode() {
+
+  const code = document.getElementById("code").value;
+  const language = document.getElementById("language").value;
+  const results = document.getElementById("results");
+
+  if (!code.trim()) {
+    results.textContent = "Please enter some code first.";
+    return;
+  }
+
+  let issues = [];
+
+  function addIssue(title, description, type) {
+    issues.push({
+      title: title,
+      description: description,
+      type: type || "warning"
+    });
+  }
+
+  // Check for possible hardcoded secrets
+  if (
+    /password\s*=\s*["'][^"']+["']/i.test(code) ||
+    /api[_-]?key\s*=\s*["'][^"']+["']/i.test(code)
+  ) {
+    addIssue(
+      "Possible hardcoded secret",
+      "Avoid storing passwords or API keys directly in source code.",
+      "error"
+    );
+  }
+
+  // Check for eval()
+  if (/\beval\s*\(/.test(code)) {
+    addIssue(
+      "Use of eval()",
+      "Review this carefully because eval can execute unexpected code.",
+      "error"
+    );
+  }
+
+  // Check pending tasks
+  if (/TODO|FIXME/i.test(code)) {
+    addIssue(
+      "Pending development task",
+      "Your code contains TODO or FIXME comments that may need attention.",
+      "warning"
+    );
+  }
+
+  // JavaScript checks
+  if (language === "javascript") {
+
+    if (/\bvar\s+/.test(code)) {
+      addIssue(
+        "Use of var",
+        "Consider using let or const for clearer variable scope.",
+        "warning"
+      );
+    }
+
+    if (/console\.log\s*\(/.test(code)) {
+      addIssue(
+        "Debug output detected",
+        "Remove unnecessary console.log statements before production.",
+        "warning"
+      );
+    }
+  }
+
+  // Python checks
+  if (language === "python") {
+
+    if (/except\s*:/m.test(code)) {
+      addIssue(
+        "Broad exception handling",
+        "Consider catching specific exceptions instead of using a bare except.",
+        "warning"
+      );
+    }
+
+    if (/print\s*\(/.test(code)) {
+      addIssue(
+        "Print statement detected",
+        "Check whether debugging print statements should remain in production.",
+        "warning"
+      );
+    }
+  }
+
+  // Java checks
+  if (language === "java") {
+
+    if (/catch\s*\(\s*Exception\b/.test(code)) {
+      addIssue(
+        "Broad exception handling",
+        "Consider catching a more specific exception.",
+        "warning"
+      );
+    }
+
+    if (/System\.out\.println/.test(code)) {
+      addIssue(
+        "Console output detected",
+        "Review debugging output before production.",
+        "warning"
+      );
+    }
+  }
+
+  // C++ checks
+  if (language === "cpp") {
+
+    if (/gets\s*\(/.test(code)) {
+      addIssue(
+        "Unsafe gets() function",
+        "Avoid gets(). Use safer input handling methods.",
+        "error"
+      );
+    }
+
+    if (/using\s+namespace\s+std/.test(code)) {
+      addIssue(
+        "Namespace usage",
+        "Consider using specific std names to avoid namespace conflicts.",
+        "warning"
+      );
+    }
+  }
+
+  // Long line check
+  if (code.split("\n").some(line => line.length > 120)) {
+    addIssue(
+      "Long code line",
+      "Some lines exceed 120 characters. Consider improving formatting.",
+      "warning"
+    );
+  }
+
+  // Check empty functions
+  if (/\{\s*\}/.test(code)) {
+    addIssue(
+      "Empty code block",
+      "Review empty functions or code blocks to confirm they are intentional.",
+      "warning"
+    );
+  }
+
+  // No matching issues
+  if (issues.length === 0) {
+    addIssue(
+      "No basic issues detected",
+      "The selected checks found no matching issues. This does not guarantee that your code is bug-free.",
+      "good"
+    );
+  }
+
+  const errors = issues.filter(i => i.type === "error").length;
+  const warnings = issues.filter(i => i.type === "warning").length;
+
+  const score = Math.max(
+    0,
+    100 - errors * 25 - warnings * 10
+  );
+
+  reviewCount++;
+
+  document.getElementById("score").textContent = score + "/100";
+  document.getElementById("count").textContent = errors + warnings;
+  document.getElementById("reviews").textContent = reviewCount;
+
+  results.innerHTML = "";
+
+  issues.forEach(issue => {
+
+    const box = document.createElement("div");
+    box.className = "issue " + issue.type;
+
+    const title = document.createElement("h3");
+    title.textContent =
+      (issue.type === "error" ? "🔴 " :
+       issue.type === "good" ? "🟢 " : "🟠 ") +
+      issue.title;
+
+    const description = document.createElement("p");
+    description.textContent = issue.description;
+
+    box.appendChild(title);
+    box.appendChild(description);
+
+    results.appendChild(box);
+  });
+
+  latestReport =
+    "CODEGUARD AI - CODE REVIEW REPORT\n\n" +
+    "Language: " + language + "\n" +
+    "Code Score: " + score + "/100\n" +
+    "Issues Found: " + (errors + warnings) + "\n\n" +
+    issues.map((issue, index) =>
+      (index + 1) + ". " + issue.title +
+      "\n" + issue.description
+    ).join("\n\n") +
+    "\n\nNote: This is a basic static analysis report.";
+
+  document.getElementById("status").textContent =
+    "Analysis completed successfully.";
 }
 
-let issues=[];
+function clearCode() {
 
-if(/password\s*=\s*["'][^"']+["']/i.test(code) ||
-/api[_-]?key\s*=\s*["'][^"']+["']/i.test(code)){
-issues.push(["Possible hardcoded secret","Avoid storing passwords or API keys directly in source code.","error"]);
+  document.getElementById("code").value = "";
+
+  document.getElementById("results").textContent =
+    "Your analysis results will appear here.";
+
+  document.getElementById("score").textContent = "--";
+  document.getElementById("count").textContent = "0";
+
+  document.getElementById("status").textContent =
+    "Ready to analyze your code.";
+
+  latestReport = "";
 }
 
-if(/\beval\s*\(/.test(code)){
-issues.push(["Use of eval()","Review carefully: eval can execute unexpected code.","error"]);
+function downloadReport() {
+
+  if (!latestReport) {
+    alert("Please analyze your code before downloading a report.");
+    return;
+  }
+
+  const blob = new Blob(
+    [latestReport],
+    { type: "text/plain" }
+  );
+
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+
+  link.href = url;
+  link.download = "CodeGuard-AI-Report.txt";
+
+  link.click();
+
+  URL.revokeObjectURL(url);
 }
 
-if(/TODO|FIXME/.test(code)){
-issues.push(["Pending code comment","Review unfinished tasks before releasing the project.","warning"]);
-}
-
-if(lang==="JavaScript" && /\bvar\s+/.test(code)){
-issues.push(["Use of var","Consider let or const for clearer variable scope.","warning"]);
-}
-
-if(/console\.log|print\s*\(/.test(code)){
-issues.push(["Debug output detected","Check whether debugging statements should remain in production.","warning"]);
-}
-
-if(code.split("\n").length>100){
-issues.push(["Long source file","Consider splitting your code into smaller functions or modules.","warning"]);
-}
-
-if(/catch\s*\(\s*\w+\s*\)\s*\{\s*\}/.test(code) ||
-/except\s*:\s*pass/.test(code)){
-issues.push(["Empty error handler","Handle errors meaningfully instead of silently ignoring them.","error"]);
-}
-
-if(issues.length===0){
-issues.push(["No common issues detected","This basic scan did not identify the patterns it checks for. Manual review is still important.","good"]);
-}
-
-reviews++;
-let score=Math.max(0,100-issues.filter(x=>x[2]==="error").length*25-issues.filter(x=>x[2]==="warning").length*10);
-
-document.getElementById("score").textContent=score+"/100";
-document.getElementById("count").textContent=issues.filter(x=>x[2]!=="good").length;
-document.getElementById("reviews").textContent=reviews;
-
-results.innerHTML="";
-issues.forEach(issue=>{
-let div=document.createElement("div");
-div.className="issue "+(issue[2]==="good"?"good":issue[2]==="error"?"error":"");
-let title=document.createElement("strong");
-title.textContent=issue[0];
-let description=document.createElement("p");
-description.textContent=issue[1];
-description.className="muted";
-div.append(title,description);
-results.appendChild(div);
-});
-}
-
-function clearCode(){
-document.getElementById("code").value="";
-document.getElementById("results").textContent="Your analysis results will appear here.";
-document.getElementById("score").textContent="--";
-document.getElementById("count").textContent="0";
-}
 </script>
+
 </body>
 </html>
